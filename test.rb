@@ -21,16 +21,29 @@ puts printer.start_receipt #['#12345', 'linia 11111', 'linia 2222']
 # puts printer.read_error
 # # sleep(1)
 am=0
-
-# (1..3).each do |i|
+cnt =1
+(1..1).each do |i|
 #   printer.add_receipt_entry 1, "Pozycja #{1}", 0.5, 'A', 300, 150
 #   am += 150
-  printer.add_receipt_entry 1, "Ωµ²Bąk dluzyca", 1, 'A', 100, 100
-  am += 100
+  printer.add_receipt_entry cnt, "Stawka A #{i}", 3, 'A', 0.01, 0.03
+  cnt += 1
+  am += 0.03
   # printer.add_receipt_entry 3, "GżeGrzÓŁka", 20, 'A', 10, 200
   # am += 200
   # puts printer.read_error
   # sleep(1)
+end
+
+# ((cnt)..(cnt+19)).each do |i|
+# #   printer.add_receipt_entry 1, "Pozycja #{1}", 0.5, 'A', 300, 150
+# #   am += 150
+#   printer.add_receipt_entry cnt, "B: Opis #{i}", 1, 'B', 1, 1
+#   cnt += 1
+#   am += 1
+#   # printer.add_receipt_entry 3, "GżeGrzÓŁka", 20, 'A', 10, 200
+#   # am += 200
+#   # puts printer.read_error
+#   # sleep(1)
 # end
 # puts printer.close_receipt 'KIERPOCIAGU', am, am,['^0 ^232424', 'Zapraszamy ponownie http://nettigo.pl']
 
@@ -38,11 +51,11 @@ puts printer.extended_close_receipt '',
                                     am,
                                     {
                                         lines: ['^0 ^W-30999', 'Zapraszamy ponownie http://nettigo.pl'],
-                                        cash: 10,
+                                        cash: am,
                                         payments: [
-                                            {type: 6, name: 'NAJLEPSZE', amount: 30},
-                                            {type: 3, name: 'ŁÓDŹ', amount: 30},
-                                            {type: 4, name: 'PRZELEW', amount: 30}
+                                            {type: 6, name: 'NAJLEPSZE', amount: 0}
+                                            # {type: 3, name: 'ŁÓDŹ', amount: 10},
+                                            # {type: 4, name: 'PRZELEW', amount: 10}
                                         ]
 
 

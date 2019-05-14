@@ -79,11 +79,13 @@ class EmarTempoPrinter
     read_and_parse
   end
 
+  #Zaloguj kasjera. Nazwa w *cashier*, numer kasy w *no*
   def login_cashier cashier, no
     cmd = "0#p#{conv_encoding(cashier)}#{CR.chr}#{no}#{CR.chr}"
     send_command(cmd)
     read_and_parse
   end
+
 
   def logout_cashier cashier, no
     cmd = "0#q#{cashier}#{CR.chr}#{no}#{CR.chr}"
@@ -143,6 +145,7 @@ class EmarTempoPrinter
     @printer.read_timeout = 200; # domyślny timeotut w czekaniu na odpowiedź
   end
 
+  # Wydrukuj QR code i zapisz w nim *str*
   def qr_code str
     cmd = "250$d#{str}#{0xD.chr}"
     # puts cmd
@@ -168,6 +171,8 @@ class EmarTempoPrinter
     end
   end
 
+  #anuluj paragon. W zależności od typu obsługi błędów ustawionych będzie to natychmiastowe, lub trzeba będzie poczekać
+  # na skasowanie komunikatu na panelu drukarki
   def void_receipt
     cmd = "000$e"
     send_command(cmd)
