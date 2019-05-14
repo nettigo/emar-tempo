@@ -5,9 +5,6 @@ Gem::Specification.new do |s|
   s.authors= %q{Witold Rugowski}
   s.homepage = "https://github.com/nettigo/emar-tempo"
   s.summary = %q{Support for Emar Tempo Pro fiscal printer (https://emar.pl/urzadzenia-fiskalne/drukarki-fiskalne/tempo-pro-57mm-1-wyswietlacz/)}
-  s.files = [
-      "lib/emar-tempo.rb",
-      "lib/printer-comm.rb"
-  ]
+  s.files             = `git ls-files`.split($\)
   s.require_paths = ["lib"]
 end
