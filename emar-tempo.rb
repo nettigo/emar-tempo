@@ -1,1 +1,1 @@
-require_relative 'src/emar-tempo'
+require_relative 'lib/emar-tempo'
