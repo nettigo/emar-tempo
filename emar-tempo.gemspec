@@ -7,4 +7,7 @@ Gem::Specification.new do |s|
   s.summary = %q{Support for Emar Tempo Pro fiscal printer (https://emar.pl/urzadzenia-fiskalne/drukarki-fiskalne/tempo-pro-57mm-1-wyswietlacz/)}
   s.files             = `git ls-files`.split($\)
   s.require_paths = ["lib"]
+
+  spec.add_runtime_dependency 'bunny', '~> 2.14'
+  spec.add_runtime_dependency 'serialport', '~> 1.3'
 end
