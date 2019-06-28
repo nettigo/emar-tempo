@@ -93,6 +93,34 @@ class EmarTempoPrinter
     read_and_parse
   end
 
+  #Zamknięcie paragonu. Parametry:
+  #
+  # * name - nazwa kasy (numer)
+  # * total - łączna kwota
+  # * opts - hash z danymi
+  #
+  # Wartości dla opts:
+  # *lines* - lista dodatkowych linii tekstu, jesli pierwsza zacznyna sie ^0 to potem jest nr transkacji
+  # *cash* ile wpłacono gotówką
+  # *payments* tablica hashy z info dotyczącymi rodzajów płatnośći
+  #
+  # Każdy hash z payments musi mieć klucze
+  # *type* - nr typu płatności :
+  # 0 gotówka
+  # 1 karta
+  # 2 czek
+  # 3 bon
+  # 4 inna
+  # 5 kredyt
+  # 6 konto klienta
+  # 7 voucher
+  # 8 waluta
+  # 9 przelew
+  # *amount* - jaka kwota zapłacona daną płatność
+  # *name* - nazwa. NIie w każdym przypadku nazwa jest wyświetlana (np dla 0 - gotówka)
+  #
+  # Sumy wszystkich amount oraz *cash* musza się równać *total* (inaczej będzie błąd podczas drukowania paragonu)
+  # kod nie sprawdza tych wartości.
   def extended_close_receipt name, total, opts = {}
     opts[:lines] ||= []
     discount_type = 0
@@ -167,7 +195,7 @@ class EmarTempoPrinter
     if ret[0] == 0x31 && ret[1] == 0x23 && ret[2] == 0x45
       @last_error = ret[3..-1].map {|b| b.chr}.join().to_i
     else
-      @last_error = -1
+      @last_error = 0
     end
   end
 

@@ -2,7 +2,7 @@ require 'rubygems'
 require './emar-tempo'
 
 
-printer = EmarTempoPrinter.new '/dev/ttyUSB0', 9600
+printer = EmarTempoPrinter.new '/dev/ttyUSB1', 9600
 
 printer.open
 

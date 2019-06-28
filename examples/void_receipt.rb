@@ -1,8 +1,12 @@
 require 'rubygems'
 require './emar-tempo'
+require 'optparse'
+@opts = ARGV.getopts('p:')
+pp @opts
+@prt_port = @opts["p"]
+@prt_port ||= "/dev/ttyUSB0"
 
-
-printer = EmarTempoPrinter.new '/dev/ttyUSB0', 9600
+printer = EmarTempoPrinter.new @prt_port, 9600
 
 printer.open
 

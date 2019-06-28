@@ -25,9 +25,9 @@ cnt =1
 (1..1).each do |i|
 #   printer.add_receipt_entry 1, "Pozycja #{1}", 0.5, 'A', 300, 150
 #   am += 150
-  printer.add_receipt_entry cnt, "Stawka A #{i}", 3, 'A', 0.01, 0.03
+  printer.add_receipt_entry cnt, "MOD-904:Moduł przekaźnika, 1 kanał, 5V", 1, 'A', 6.9, 6.9
   cnt += 1
-  am += 0.03
+  am += 6.9
   # printer.add_receipt_entry 3, "GżeGrzÓŁka", 20, 'A', 10, 200
   # am += 200
   # puts printer.read_error
@@ -52,11 +52,11 @@ puts printer.extended_close_receipt '',
                                     {
                                         lines: ['^0 ^W-30999', 'Zapraszamy ponownie http://nettigo.pl'],
                                         cash: am,
-                                        payments: [
-                                            {type: 6, name: 'NAJLEPSZE', amount: 0}
-                                            # {type: 3, name: 'ŁÓDŹ', amount: 10},
-                                            # {type: 4, name: 'PRZELEW', amount: 10}
-                                        ]
+                                        # payments: [
+                                        #     {type: 6, name: 'NAJLEPSZE', amount: 0}
+                                        #     # {type: 3, name: 'ŁÓDŹ', amount: 10},
+                                        #     # {type: 4, name: 'PRZELEW', amount: 10}
+                                        # ]
 
 
                                     }
