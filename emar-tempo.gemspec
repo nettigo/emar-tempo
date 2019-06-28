@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.files             = `git ls-files`.split($\)
   s.require_paths = ["lib"]
 
-  spec.add_runtime_dependency 'bunny', '~> 2.14'
-  spec.add_runtime_dependency 'serialport', '~> 1.3'
-  spec.add_runtime_dependency 'test-unit', '~> 3.2'
-  spec.add_runtime_dependency 'irb', '~> 1.0'
+  s.add_runtime_dependency 'bunny', '~> 2.14'
+  s.add_runtime_dependency 'serialport', '~> 1.3'
+  s.add_runtime_dependency 'test-unit', '~> 3.2'
+  s.add_runtime_dependency 'irb', '~> 1.0'
 end
