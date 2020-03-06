@@ -135,7 +135,7 @@ class EmarTempoPrinter
       eth[:sales] = ports[0]
       eth[:copy] = ports[1]
     end
-    h[:eth] = eth
+    h[:eth]=eth
     return h
   end
 
