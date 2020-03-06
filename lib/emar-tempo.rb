@@ -108,7 +108,9 @@ class EmarTempoPrinter
         115200 => '4',
         512000 => '5'
     }
-    return bauds[b]
+    ret = bauds[b]
+    ret ||= '6'
+    return ret
   end
 
   #czy port jest do kopi paragonów? ()
@@ -156,7 +158,7 @@ class EmarTempoPrinter
     cmd = ((settings[:copy] ? 128 : 0) +
         (settings[:connections])
     ).to_s + ";"
-    cmd += bauds_to_val(settings[:speed]) + ";" unless settings[:speed].nil?
+    cmd += bauds_to_val(settings[:speed]).to_s + ";" unless settings[:speed].nil?
     return cmd
   end
 
