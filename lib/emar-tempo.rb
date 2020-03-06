@@ -165,7 +165,7 @@ class EmarTempoPrinter
 
   #ustawia porty IO oczekuje hasha z wartościami jak odczytane przez read_io_settings
   def set_io_settings(settings)
-    cmd = "P0;"
+    cmd = "0;"
     cmd += single_port_setting(settings[:com_a])
     cmd += single_port_setting(settings[:com_b])
     cmd += single_port_setting(settings[:usb0])
