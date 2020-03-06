@@ -86,11 +86,58 @@ class EmarTempoPrinter
     read_and_parse
   end
 
+  def read_bauds(val)
+    bauds = {
+        '0' => 9600,
+        '1' => 19200,
+        '2' => 38400,
+        '3' => 57600,
+        '4' => 115200,
+        '5' => 512000,
+        '6' => 'n/a'
+    }
+    return bauds[val]
+  end
+
+  #czy port jest do kopi paragonów? ()
+  def is_copy?(val)
+    return (val.to_i & 128 ) > 0
+  end
+  #ile połaczeń obsługuje (5 bitów)
+  def connections(val)
+    return (val.to_i & 63)
+  end
+  #czy moudł WiFi/BT obecny (1 na 6 bicie - brak)?
+  def is_wifi(val)
+    return (val.to_i & 64) == 0
+  end
+
   #odczytaj ustawienia portów IO drukarki
   def read_io_settings
     cmd = "2$8"
     send_command(cmd)
     read_and_parse
+    ret = read_and_parse
+    data = ret.map{|c| c.chr}.join.split(';')
+    return {error: "Za mało danych w odpowiedzi drukarki", data: data} if data.size < 14
+    h = {}
+    h[:max_conn] = data[0].to_i-48
+    h[:com_a] = {speed: read_bauds(data[2]), connections: connections(data[1]), copy: is_copy?(data[1])}
+    h[:com_b] = {speed: read_bauds(data[4]), connections: connections(data[3]), copy: is_copy?(data[3])}
+    h[:usb0] = {speed: read_bauds(data[6]), connections: connections(data[5]), copy: is_copy?(data[5])}
+    h[:usb1] = {speed: read_bauds(data[8]), connections: connections(data[7]), copy: is_copy?(data[7])}
+    h[:wifi] = {speed: read_bauds(data[10]), connections: connections(data[9]), copy: is_copy?(data[9]), present: is_wifi(data[9])}
+    h[:bluetooth] = {speed: read_bauds(data[12]), connections: connections(data[11]), copy: is_copy?(data[11]), present: is_wifi(data[11])}
+    ports = nil
+    ports = data[14].split("I")[1].split(/\r/) if data[14] =~ /^6#I/
+
+    eth = { connections: connections(data[13]), copy: is_copy?(data[13])}
+    if (ports)
+      eth[:sales] = ports[0]
+      eth[:copy] = ports[1]
+    end
+
+    return h
   end
 
 
