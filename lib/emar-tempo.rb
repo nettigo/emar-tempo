@@ -99,6 +99,18 @@ class EmarTempoPrinter
     return bauds[val]
   end
 
+  def bauds_to_val(b)
+    bauds = {
+        9600 => '0',
+        19200 => '1',
+        38400 => '2',
+        57600 => '3',
+        115200 => '4',
+        512000 => '5'
+    }
+    return bauds[b]
+  end
+
   #czy port jest do kopi paragonów? ()
   def is_copy?(val)
     return (val.to_i & 128 ) > 0
@@ -137,6 +149,28 @@ class EmarTempoPrinter
     end
     h[:eth]=eth
     return h
+  end
+
+  #zmien ustawienia z hash dla jednego portu na wartości do wysłania. BT można olać, jak nie ma to nie ma co ustawiać
+  def single_port_setting(settings)
+    cmd = ((settings[:copy] ? 128 : 0) +
+        (settings[:connections])
+    ).to_s + ";"
+    cmd += bauds_to_val(settings[:speed]) + ";" unless settings[:speed].nil?
+    return cmd
+  end
+
+  #ustawia porty IO oczekuje hasha z wartościami jak odczytane przez read_io_settings
+  def set_io_settings(settings)
+    cmd = "P0;"
+    cmd += single_port_setting(settings[:com_a])
+    cmd += single_port_setting(settings[:com_b])
+    cmd += single_port_setting(settings[:usb0])
+    cmd += single_port_setting(settings[:usb1])
+    cmd += single_port_setting(settings[:bluetooth])
+    cmd += single_port_setting(settings[:wifi])
+    send_command(cmd)
+    return read_and_parse
   end
 
 
