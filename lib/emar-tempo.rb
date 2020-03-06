@@ -172,7 +172,7 @@ class EmarTempoPrinter
     cmd += single_port_setting(settings[:usb1])
     cmd += single_port_setting(settings[:bluetooth])
     cmd += single_port_setting(settings[:wifi])
-    cmd += "0$I"
+    cmd += "0;#{settings[:eth][:connections]}$I"  #na oko - włącz ethernet
     puts cmd
     send_command(cmd)
     return read_and_parse
