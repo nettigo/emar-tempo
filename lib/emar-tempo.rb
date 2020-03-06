@@ -93,7 +93,7 @@ class EmarTempoPrinter
         '2' => 38400,
         '3' => 57600,
         '4' => 115200,
-        '5' => 512000,
+        '5' => 256000,  #dokumentacja mówi że 5 to 512k ale... są błedy. Z fabryki przyszła z 256k a zwracała 5
         '6' => 'n/a'
     }
     return bauds[val]
@@ -106,6 +106,7 @@ class EmarTempoPrinter
         38400 => '2',
         57600 => '3',
         115200 => '4',
+        256000 => '5',  #dokumentacja mówi że 5 to 512k ale... są błedy. Z fabryki przyszła z 256k a zwracała 5
         512000 => '5',
         "n/a" => '0'
     }
