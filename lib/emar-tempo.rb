@@ -120,7 +120,7 @@ class EmarTempoPrinter
     data = ret.map{|c| c.chr}.join.split(';')
     return {error: "Za mało danych w odpowiedzi drukarki", data: data} if data.size < 14
     h = {}
-    h[:max_conn] = data[0].to_i-48
+    h[:max_conn] = data[0].to_i
     h[:com_a] = {speed: read_bauds(data[2]), connections: connections(data[1]), copy: is_copy?(data[1])}
     h[:com_b] = {speed: read_bauds(data[4]), connections: connections(data[3]), copy: is_copy?(data[3])}
     h[:usb0] = {speed: read_bauds(data[6]), connections: connections(data[5]), copy: is_copy?(data[5])}
