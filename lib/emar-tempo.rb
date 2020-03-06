@@ -86,6 +86,13 @@ class EmarTempoPrinter
     read_and_parse
   end
 
+  #odczytaj ustawienia portów IO drukarki
+  def read_io_settings
+    cmd = "2$8"
+    send_command(cmd)
+    read_and_parse
+  end
+
 
   def logout_cashier cashier, no
     cmd = "0#q#{cashier}#{CR.chr}#{no}#{CR.chr}"
