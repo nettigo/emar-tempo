@@ -116,7 +116,6 @@ class EmarTempoPrinter
   def read_io_settings
     cmd = "2$8"
     send_command(cmd)
-    read_and_parse
     ret = read_and_parse
     data = ret.map{|c| c.chr}.join.split(';')
     return {error: "Za mało danych w odpowiedzi drukarki", data: data} if data.size < 14
