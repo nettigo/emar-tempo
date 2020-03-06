@@ -131,9 +131,18 @@ class EmarTempoPrinter
   def read_io_settings
     cmd = "2$8"
     send_command(cmd)
-    ret = read_and_parse
-    data = ret.map{|c| c.chr}.join.split(';')
+    sleep(1)
+    cnt = 0
+    ret = []
+    while (cnt < 10 && ret == []) do
+      ret = read_and_parse
+      cnt += 1
+    end
+    return {error: 'Timeout czekając na odpowiedź'} if (cnt >= 10 && ret == [])
+
+    data = ret.map { |c| c.chr }.join.split(';')
     return {error: "Za mało danych w odpowiedzi drukarki", data: data} if data.size < 14
+
     h = {}
     h[:max_conn] = data[0].to_i
     h[:com_a] = {speed: read_bauds(data[2]), connections: connections(data[1]), copy: is_copy?(data[1])}
@@ -145,12 +154,12 @@ class EmarTempoPrinter
     ports = nil
     ports = data[14].split("I")[1].split(/\r/) if data[14] =~ /^6#I/
 
-    eth = { connections: connections(data[13]), copy: is_copy?(data[13])}
+    eth = {connections: connections(data[13]), copy: is_copy?(data[13])}
     if (ports)
       eth[:sales] = ports[0]
       eth[:copy] = ports[1]
     end
-    h[:eth]=eth
+    h[:eth] = eth
     return h
   end
 
