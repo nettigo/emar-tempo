@@ -171,7 +171,8 @@ class EmarTempoPrinter
     cmd += single_port_setting(settings[:usb0])
     cmd += single_port_setting(settings[:usb1])
     cmd += single_port_setting(settings[:bluetooth])
-    cmd += single_port_setting(settings[:wifi]).delete_suffix(';')
+    cmd += single_port_setting(settings[:wifi])
+    cmd += single_port_setting(settings[:eth]).delete_suffix(';')
     cmd+="$I"
     puts cmd
     send_command(cmd)
